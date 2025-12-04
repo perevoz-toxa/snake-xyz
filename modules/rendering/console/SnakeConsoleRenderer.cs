@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace snake_xyz.modules.rendering
+namespace snake_xyz.modules.rendering.console
 {
     internal class SnakeConsoleRenderer : IGameRenderer
     {

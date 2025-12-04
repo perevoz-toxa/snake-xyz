@@ -1,6 +1,7 @@
 ﻿using snake_xyz.modules.controller;
 using snake_xyz.modules.input;
 using snake_xyz.modules.rendering;
+using snake_xyz.modules.rendering.console;
 using System.Text;
 
 namespace snake_xyz
