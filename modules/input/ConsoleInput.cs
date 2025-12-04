@@ -20,7 +20,7 @@ namespace snake_xyz.modules.input
         {
             while (Console.KeyAvailable)
             {
-                var key = Console.ReadKey();
+                var key = Console.ReadKey(true);
 
                 switch (key.Key)
                 {

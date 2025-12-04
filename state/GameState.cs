@@ -8,6 +8,11 @@ namespace snake_xyz.state
 {
     internal class GameState
     {
+        public bool IsAlive { get; private set; } = true;
+        public int fieldWidth { get; set; }
+        public int fieldHeight { get; set; }
+
+
         private struct Cell
         {
             public int x;
@@ -19,10 +24,8 @@ namespace snake_xyz.state
                 this.y = y;
             }
         }
-
         private List<Cell> _body = new();
         private ESnakeDirection currentDirection = ESnakeDirection.Left;
-
         private float _timeToMove = 0f;
 
         public void SetDirection(ESnakeDirection direction)
@@ -33,9 +36,16 @@ namespace snake_xyz.state
         public void Reset()
         {
             _body.Clear();
-            currentDirection = ESnakeDirection.Left;
+            currentDirection = ESnakeDirection.Right;
             _body.Add(new Cell(0, 0));
             _timeToMove = 0f;
+            IsAlive = true;
+        }
+
+        public IEnumerable<(int x, int y)> GetBody()
+        {
+            foreach (var cell in _body)
+                yield return (cell.x, cell.y);
         }
 
         public void Update(float deltaTime)
@@ -46,28 +56,18 @@ namespace snake_xyz.state
 
             _timeToMove = 1f / 4;
             var head = _body[0];
+            var next = ShiftTo(head, currentDirection);
+
+            if (next.x < 0 || next.x >= fieldWidth ||
+                next.y < 0 || next.y >= fieldHeight)
+            {
+                IsAlive = false;
+                return;
+            }
             var nextCell = ShiftTo(head, currentDirection);
 
             _body.RemoveAt(_body.Count - 1);
             _body.Insert(0, nextCell);
-
-            string directionToPring = "";
-            switch (currentDirection)
-            {
-                case ESnakeDirection.Left:
-                    directionToPring = "←";
-                    break;
-                case ESnakeDirection.Right:
-                    directionToPring = "→";
-                    break;
-                case ESnakeDirection.Up:
-                    directionToPring = "↑";
-                    break;
-                case ESnakeDirection.Down:
-                    directionToPring = "↓";
-                    break;
-            }
-            Console.WriteLine($"{_body[0].x}, {_body[0].y}, {directionToPring}");
         }
 
         private Cell ShiftTo(Cell from, ESnakeDirection toDirection)

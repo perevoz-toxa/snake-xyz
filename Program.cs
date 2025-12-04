@@ -1,5 +1,6 @@
 ﻿using snake_xyz.modules.controller;
 using snake_xyz.modules.input;
+using snake_xyz.modules.rendering;
 using System.Text;
 
 namespace snake_xyz
@@ -11,7 +12,9 @@ namespace snake_xyz
             Console.OutputEncoding = Encoding.UTF8;
 
             Input input = new ConsoleInput();
-            GameLogic gameLogic = new GameLogic();
+            var palette = new[] { ConsoleColor.Black, ConsoleColor.Green };
+            IGameRenderer renderer = new SnakeConsoleRenderer(palette);
+            GameLogic gameLogic = new GameLogic(renderer);
             gameLogic.InitializeInput(input);
 
             gameLogic.GoToGameplay();
@@ -22,7 +25,7 @@ namespace snake_xyz
                 input.Update();
                 var frameStartTime = DateTime.Now;
                 float deltaTime = (float)(frameStartTime - lastFrameTime).TotalSeconds;
-                gameLogic.Update(deltaTime);
+                gameLogic.DrawNewState(deltaTime);
                 lastFrameTime = frameStartTime;
             }
         }
