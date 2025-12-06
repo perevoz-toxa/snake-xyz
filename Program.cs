@@ -13,11 +13,10 @@ namespace snake_xyz
             Console.OutputEncoding = Encoding.UTF8;
 
             Input input = new ConsoleInput();
-            var palette = new[] { ConsoleColor.Black, ConsoleColor.Green };
-            IGameRenderer renderer = new SnakeConsoleRenderer(palette);
+            var palette = new[] { ConsoleColor.Black, ConsoleColor.Green, ConsoleColor.Red, ConsoleColor.White };
+            IGameRenderer renderer = new ConsoleGameRenderer(palette);
             GameLogic gameLogic = new GameLogic(renderer);
             gameLogic.InitializeInput(input);
-
             gameLogic.GoToGameplay();
 
             var lastFrameTime = DateTime.Now;

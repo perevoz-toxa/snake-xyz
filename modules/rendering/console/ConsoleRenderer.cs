@@ -61,6 +61,16 @@ namespace snake_xyz.modules.rendering.console
 
         public void Render()
         {
+            var currentWidth = Console.WindowWidth;
+            var currentHeight = Console.WindowHeight;
+
+            if (currentWidth != width || currentHeight != height)
+            {
+                width = Math.Min(currentWidth, _maxWidth);
+                height = Math.Min(currentHeight, _maxHeight);
+                Clear(); 
+            }
+
             Console.Clear();
             Console.BackgroundColor = bgColor;
 

@@ -9,8 +9,11 @@ namespace snake_xyz.modules.rendering
 {
     internal interface IGameRenderer
     {
-        void DrawFrame(GameState state);
+        int Width { get; }
+        int Height { get; }
 
+        void DrawFrame(GameState state);
         void Clear();
+        void DrawTextScreen(string text);
     }
 }
